@@ -211,4 +211,81 @@ All files      |    66.67 |     37.5 |       50 |    66.67 |                |
 ---------------|----------|----------|----------|----------|----------------|
 ```
 
-Note the lack of code coverage.
+Note the lack of code coverage. Adding a few more test cases along with some
+`/* istanbul ignore ... */` comments to let `istanbul` know what it can safely
+ignore, we get to:
+
+```
+ PASS  __tests__/base.spec.ts
+  Simple expression tests
+    ✓ Check literal value (3ms)
+    ✓ Check addition
+    ✓ Check subtraction
+    ✓ Check multiplication (1ms)
+    ✓ Check division
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        1.353s
+Ran all test suites.
+---------------|----------|----------|----------|----------|----------------|
+File           |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+---------------|----------|----------|----------|----------|----------------|
+All files      |      100 |      100 |      100 |      100 |                |
+ src           |      100 |      100 |      100 |      100 |                |
+  index.ts     |      100 |      100 |      100 |      100 |                |
+ src/core      |      100 |      100 |      100 |      100 |                |
+  functions.ts |      100 |      100 |      100 |      100 |                |
+  index.ts     |      100 |      100 |      100 |      100 |                |
+ src/utils     |      100 |      100 |      100 |      100 |                |
+  checks.ts    |      100 |      100 |      100 |      100 |                |
+  index.ts     |      100 |      100 |      100 |      100 |                |
+---------------|----------|----------|----------|----------|----------------|
+```
+
+Now, if we change a test to make it fail, we get something like this:
+
+```
+● Simple expression tests › Check division
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected value to be close to (with 2-digit precision):
+      1
+    Received:
+      2
+
+      19 |     test("Check division", () => {
+      20 |         let expr = bin("/", 10, 5);
+    > 21 |         expect(evaluate(expr)).toBeCloseTo(1);
+      22 |     });
+      23 | });
+      24 |
+
+      at Object.<anonymous> (__tests__/base.spec.ts:21:32)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 passed, 5 total
+Snapshots:   0 total
+Time:        1.535s
+Ran all test suites.
+---------------|----------|----------|----------|----------|----------------|
+File           |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+---------------|----------|----------|----------|----------|----------------|
+All files      |      100 |      100 |      100 |      100 |                |
+ src           |      100 |      100 |      100 |      100 |                |
+  index.ts     |      100 |      100 |      100 |      100 |                |
+ src/core      |      100 |      100 |      100 |      100 |                |
+  functions.ts |      100 |      100 |      100 |      100 |                |
+  index.ts     |      100 |      100 |      100 |      100 |                |
+ src/utils     |      100 |      100 |      100 |      100 |                |
+  checks.ts    |      100 |      100 |      100 |      100 |                |
+  index.ts     |      100 |      100 |      100 |      100 |                |
+---------------|----------|----------|----------|----------|----------------|
+```
+
+Note that the stack track is correct. It points to the problem **in the TypeScript
+code**.
+
+## Debugging
