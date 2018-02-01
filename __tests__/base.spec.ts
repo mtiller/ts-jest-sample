@@ -1,4 +1,4 @@
-import { evaluate, Expression, BinaryOperation, BinaryOperators } from "../src";
+import { evaluate, BinaryOperation, BinaryOperators } from "../src";
 
 describe("Simple expression tests", () => {
     test("Check literal value", () => {

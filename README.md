@@ -322,4 +322,49 @@ undefined
 >
 ```
 
+Now be sure to update your `jest.config.js` to include the following setting or `jest`
+will start matching the code in the `lib/__tests__` directory:
+
+```json
+    testPathIgnorePatterns: ["/lib/", "/node_modules/"],
+```
+
 ## Debugging
+
+Finally, we come to debugging. I'm using Visual Studio Code, so I'll demonstrate how to
+get debugging working there. Some of this information may very well translate to other
+IDEs.
+
+In VSCode, we can go to the debugging sidebar. Initially, next to the "play" button
+will be the words "No Configuration". Clicking on that brings up a pull-down menu
+with an option "Add Confiuration...".
+
+As much as I love TypeScript, debugging is really its Achilles Heel. It isn't that you
+cannot debug, it is that it is just difficult to get working. If you select "Add Configuration..." and then "Node.js", you'll see several preconfigurations including
+one for `mocha`. But there isn't one for `jest`. So you'll have to create your
+own `.vscode/launch.json` file. Fortunately, the `jest` page suggestions you create
+a `.vscode/launch.json` file that looks like this:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Jest Tests",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": ["--inspect-brk", "${workspaceRoot}/node_modules/.bin/jest", "--runInBand"],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}
+```
+
+I was pleasantly surprised to find that I could not only run my tests and get code coverage
+as usual, but also set breakpoints in both the tests (_i.e.,_ in `__tests__/base.spec.ts`)
+as well as in the code (_e.g.,_ `src/core/functions.ts`) and the debugger will find them.
+
+Note that I tested all this on Node 8.x. I've seen issues with debugging using Node 6.x so
+if you are having trouble there, you might consider upgrading (or let, if you manage to fix
+it, submit a PR for this README explaining the fix).
