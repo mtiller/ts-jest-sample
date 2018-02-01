@@ -2,11 +2,11 @@
 
 The goal in this project is to create a TypeScript project that can do all of the following:
 
-* Compile code an es5 library that can be published as a Node module with typings.
+* Compile code as an es5 library that can be published as a Node module with typings.
 * Using `jest` and `ts-jest` for testing
+* Provides proper stack traces for failed tests
 * Provide accurate code coverage metrics
 * Can be debugged using the Node debugger with proper source maps
-* Provides proper stack traces for failed tests
 
 ## Basic Setup
 
@@ -287,5 +287,39 @@ All files      |      100 |      100 |      100 |      100 |                |
 
 Note that the stack track is correct. It points to the problem **in the TypeScript
 code**.
+
+## Compilation
+
+Recall that we added a `compile` script to our `package.json`. We can compile the
+code with `yarn compile`. Doing so, we see that the `lib` directory is populated
+with two subdirectories, `src` and `__tests__`.
+
+However, if we look in those directories, we will find that they only include
+the generated Javascript code. They do not include type definitions. In order
+to generate type definitions (`.d.ts` files) so that other TypeScript users can
+benefit from all the type information we've added to our code, we have to set
+the `declaration` field in our `tsconfig.json` file to be `true`.
+
+Also note that in order for others to use this package as an NPM module, you need
+to set the `main` field in `package.json` to `lib/src/index.js`. Furthermore, in
+order for others to be able to access the types in this module, we also need to
+set the `typings` field in `package.json` to `lib/src/index.d.ts`. In other words,
+
+```json
+    "main": "lib/src/index.js",
+    "typings": "lib/src/index.d.ts",
+```
+
+If properly configured, we can then launch a `node` session and import our new package:
+
+```sh
+$ node
+> var me = require(".")
+undefined
+> me
+{ evaluate: [Function: evaluate],
+  assertNever: [Function: assertNever] }
+>
+```
 
 ## Debugging
