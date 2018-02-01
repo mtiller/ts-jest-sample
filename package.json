@@ -1,0 +1,14 @@
+{
+  "name": "ts-jest-sample",
+  "version": "0.1.0",
+  "description": "A simple project to demonstrate TypeScript + Jest + ts-jest",
+  "main": "lib/index.js",
+  "repository": "github.com:xogeny/ts-jest-sample",
+  "author": "Michael M. Tiller",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.1.4",
+    "ts-jest": "^22.0.2",
+    "typescript": "^2.7.1"
+  }
+}
