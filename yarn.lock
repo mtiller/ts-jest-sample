@@ -10,6 +10,10 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@types/jest@^22.1.1":
+  version "22.1.1"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-22.1.1.tgz#231d7c60ed130200af9e96c82469ed25b59a7ea2"
+
 abab@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
