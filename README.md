@@ -229,18 +229,7 @@ Snapshots:   0 total
 Time:        1.353s
 Ran all test suites.
 ---------------|----------|----------|----------|----------|----------------|
-File           |  % Stmts | % Branch |  % Funcs |  % Lines |Un
-
-
-
-
-
-
-
-
-
-
-ed Lines |
+File           |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
 ---------------|----------|----------|----------|----------|----------------|
 All files      |      100 |      100 |      100 |      100 |                |
  src           |      100 |      100 |      100 |      100 |                |
