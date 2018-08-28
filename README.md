@@ -135,7 +135,6 @@ module.exports = {
     testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
     collectCoverage: true,
-    mapCoverage: true,
 };
 ```
 
@@ -230,7 +229,18 @@ Snapshots:   0 total
 Time:        1.353s
 Ran all test suites.
 ---------------|----------|----------|----------|----------|----------------|
-File           |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+File           |  % Stmts | % Branch |  % Funcs |  % Lines |Un
+
+
+
+
+
+
+
+
+
+
+ed Lines |
 ---------------|----------|----------|----------|----------|----------------|
 All files      |      100 |      100 |      100 |      100 |                |
  src           |      100 |      100 |      100 |      100 |                |
