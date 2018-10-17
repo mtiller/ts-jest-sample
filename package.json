@@ -15,6 +15,6 @@
     },
     "scripts": {
         "compile": "tsc",
-        "test": "jest"
+        "test": "jest --env=node --colors --coverage test"
     }
 }
