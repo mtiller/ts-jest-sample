@@ -10,11 +10,16 @@
     "devDependencies": {
         "@types/jest": "^22.1.1",
         "jest": "^22.1.4",
+        "stryker": "^0.31.0",
+        "stryker-api": "^0.21.4",
+        "stryker-jest-runner": "^1.2.6",
+        "stryker-typescript": "^0.15.3",
         "ts-jest": "^22.0.2",
         "typescript": "^2.7.1"
     },
     "scripts": {
         "compile": "tsc",
-        "test": "jest --env=node --colors --coverage test"
+        "test": "jest --env=node --colors --coverage test",
+        "test:mutate": "stryker run"
     }
 }
