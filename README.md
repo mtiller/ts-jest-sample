@@ -1,12 +1,31 @@
-# Sample Project using ts-jest
+# Sample Project using ts-jest + stryker
 
 The goal in this project is to create a TypeScript project that can do all of the following:
 
 * Compile code as an es5 library that can be published as a Node module with typings.
 * Using `jest` and `ts-jest` for testing
 * Provides proper stack traces for failed tests
+* Using `stryker` to mutation testing
 * Provide accurate code coverage metrics
 * Can be debugged using the Node debugger with proper source maps
+
+
+# Table of contents
+- [Sample Project using ts-jest + stryker](#sample-project-using-ts-jest--stryker)
+- [Table of contents](#table-of-contents)
+    - [Basic Setup](#basic-setup)
+        - [Module and Dependencies](#module-and-dependencies)
+        - [TypeScript](#typescript)
+        - [Files](#files)
+        - [Source](#source)
+        - [Configurating Jest](#configurating-jest)
+        - [Scripts](#scripts)
+    - [Code Coverage](#code-coverage)
+        - [Configuration](#configuration)
+        - [Code Organization](#code-organization)
+    - [Compilation](#compilation)
+    - [Debugging](#debugging)
+    - [Stryker (Mutation testing)](#stryker-mutation-testing)
 
 ## Basic Setup
 
@@ -106,7 +125,8 @@ I then add the following scripts to `package.json`:
 ```json
   "scripts": {
     "compile": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "test:mutate": "stryker run"
   }
 ```
 
@@ -367,3 +387,41 @@ as well as in the code (_e.g.,_ `src/core/functions.ts`) and the debugger will f
 Note that I tested all this on Node 8.x. I've seen issues with debugging using Node 6.x so
 if you are having trouble there, you might consider upgrading (or let, if you manage to fix
 it, submit a PR for this README explaining the fix).
+
+## Stryker (Mutation testing)
+https://stryker-mutator.io/
+
+Bugs, or mutants, are automatically inserted into your production code. Your tests are run for each mutant. If your tests fail then the mutant is killed. If your tests passed, the mutant survived. The higher the percentage of mutants killed, the more effective your tests are.
+
+It's really that simple.
+
+Still confused? Why not taking a look at our [example page](https://stryker-mutator.io/example) and try it out yourself?
+
+```sh
+$ npm run test:mutate
+
+22:58:08 (26376) INFO ConfigReader Using stryker.conf.js in the current working directory.
+22:58:09 (26376) INFO TypescriptConfigEditor Loading tsconfig file /Users/v.yandimirkin/Projects/ts-jest-sample/tsconfig.json
+22:58:09 (26376) INFO InputFileResolver Found 6 of 16 file(s) to be mutated.
+22:58:09 (26376) INFO InitialTestExecutor Starting initial test run. This may take a while.
+22:58:11 (26376) INFO InitialTestExecutor Initial test run succeeded. Ran 5 tests in 2 seconds (net 4 ms, overhead 2405 ms).
+22:58:11 (26376) INFO Stryker 34 Mutant(s) generated
+22:58:12 (26376) INFO SandboxPool Creating 8 test runners (based on CPU count)
+Mutation testing  [==================================================] 100% (ETC n/a) 34/34 tested (13 survived)
+...
+Ran all tests for this mutant.
+Ran 5.00 tests per mutant on average.
+---------------|---------|----------|-----------|------------|----------|---------|
+File           | % score | # killed | # timeout | # survived | # no cov | # error |
+---------------|---------|----------|-----------|------------|----------|---------|
+All files      |   61.76 |       21 |         0 |         13 |        0 |       0 |
+ core          |   74.07 |       20 |         0 |          7 |        0 |       0 |
+  functions.ts |   76.00 |       19 |         0 |          6 |        0 |       0 |
+  index.ts     |   50.00 |        1 |         0 |          1 |        0 |       0 |
+ utils         |    0.00 |        0 |         0 |          5 |        0 |       0 |
+  checks.ts    |    0.00 |        0 |         0 |          4 |        0 |       0 |
+  index.ts     |    0.00 |        0 |         0 |          1 |        0 |       0 |
+ index.ts      |   50.00 |        1 |         0 |          1 |        0 |       0 |
+---------------|---------|----------|-----------|------------|----------|---------|
+22:58:17 (26376) INFO Stryker Done in 8 seconds.
+```
